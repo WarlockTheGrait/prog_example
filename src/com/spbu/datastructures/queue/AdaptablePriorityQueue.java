@@ -23,6 +23,7 @@
 package com.spbu.datastructures.queue;
 
 import com.spbu.datastructures.Entry;
+import com.spbu.datastructures.linked.SinglyLinkedList;
 
 /**
  * Interface for the adaptable priority queue ADT. The Entry instance
@@ -60,4 +61,105 @@ public interface AdaptablePriorityQueue<K,V> extends PriorityQueue<K,V> {
    * @throws IllegalArgumentException if e is not a valid entry for the priority queue.
    */
   void replaceValue(Entry<K, V> entry, V value) throws IllegalArgumentException;
+
+  /**
+   * Realization of a FIFO queue as an adaptation of a SinglyLinkedList.
+   * All operations are performed in constant time.
+   *
+   * @author Michael T. Goodrich
+   * @author Roberto Tamassia
+   * @author Michael H. Goldwasser
+   * @see SinglyLinkedList
+   */
+  class LinkedQueue<E> implements Queue<E> {
+
+    /** The primary storage for elements of the queue */
+    private SinglyLinkedList<E> list = new SinglyLinkedList<>();   // an empty  list
+
+    /** Constructs an initially empty queue. */
+    public LinkedQueue() { }                  // new queue relies on the initially empty list
+
+    /**
+     * Returns the number of elements in the queue.
+     * @return number of elements in the queue
+     */
+    @Override
+    public int size() { return list.size(); }
+
+    /**
+     * Tests whether the queue is empty.
+     * @return true if the queue is empty, false otherwise
+     */
+    @Override
+    public boolean isEmpty() { return list.isEmpty(); }
+
+    /**
+     * Inserts an element at the rear of the queue.
+     * @param element  the element to be inserted
+     */
+    @Override
+    public void enqueue(E element) { list.addLast(element); }
+
+    /**
+     * Returns, but does not remove, the first element of the queue.
+     * @return the first element of the queue (or null if empty)
+     */
+    @Override
+    public E first() { return list.first(); }
+
+    /**
+     * Removes and returns the first element of the queue.
+     * @return element removed (or null if empty)
+     */
+    @Override
+    public E dequeue() { return list.removeFirst(); }
+
+    /** Produces a string representation of the contents of the queue.
+     *  (from front to back). This exists for debugging purposes only.
+     */
+    public String toString() {
+      return list.toString();
+    }
+  }
+
+  /**
+   * Interface for a queue: a collection of elements that are inserted
+   * and removed according to the first-in first-out principle. Although
+   * similar in purpose, this interface differs from java.util.Queue.
+   *
+   * @author Michael T. Goodrich
+   * @author Roberto Tamassia
+   * @author Michael H. Goldwasser
+   */
+  interface Queue<E> {
+    /**
+     * Returns the number of elements in the queue.
+     * @return number of elements in the queue
+     */
+    int size();
+
+    /**
+     * Tests whether the queue is empty.
+     * @return true if the queue is empty, false otherwise
+     */
+    boolean isEmpty();
+
+    /**
+     * Inserts an element at the rear of the queue.
+     * @param e  the element to be inserted
+     */
+    void enqueue(E e);
+
+    /**
+     * Returns, but does not remove, the first element of the queue.
+     * @return the first element of the queue (or null if empty)
+     */
+    E first();
+
+    /**
+     * Removes and returns the first element of the queue.
+     * @return element removed (or null if empty)
+     */
+    E dequeue();
+  }
 }
